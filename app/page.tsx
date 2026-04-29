@@ -27,11 +27,19 @@ export default function Home() {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-      const res = await fetch(`${apiUrl}/api/info?url=${encodeURIComponent(url)}`);
+      const fetchUrl = apiUrl ? `${apiUrl}/api/info?url=${encodeURIComponent(url)}` : `/api/info?url=${encodeURIComponent(url)}`;
+      
+      console.log("Attempting fetch to:", fetchUrl); // Debug log
+
+      const res = await fetch(fetchUrl);
+      
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("API Response Error:", errorText);
+        throw new Error("حدث خطأ في السيرفر، يرجى المحاولة لاحقاً.");
+      }
+
       const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || "الرابط غير صحيح أو الموقع غير مدعوم.");
-
       setVideoInfo(data);
       setCurrentUrl(url);
     } catch (err: any) {

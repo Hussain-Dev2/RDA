@@ -28,7 +28,9 @@ export default function ResultCard({ info, url }: ResultCardProps) {
   const handleDownload = () => {
     setLoading(true);
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-    const downloadUrl = `${apiUrl}/api/download?type=${format}&quality=${quality}&url=${encodeURIComponent(url)}`;
+    const downloadUrl = apiUrl 
+      ? `${apiUrl}/api/download?type=${format}&quality=${quality}&url=${encodeURIComponent(url)}`
+      : `/api/download?type=${format}&quality=${quality}&url=${encodeURIComponent(url)}`;
     
     if (format === "mp4") {
       window.location.href = downloadUrl;
