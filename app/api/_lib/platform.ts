@@ -46,17 +46,17 @@ const FFMPEG = process.platform === 'win32' ? 'ffmpeg.exe' : 'ffmpeg';
 export function runYtDlp(args: string[]): Promise<string> {
   return new Promise((resolve, reject) => {
     // We avoid shell: true to prevent syntax errors with special chars (like parens in User-Agent)
-    const process = spawn(YT_DLP, args, { 
+    const child = spawn(YT_DLP, args, { 
       maxBuffer: 10 * 1024 * 1024 
     } as any);
 
     let stdout = '';
     let stderr = '';
 
-    process.stdout.on('data', (data) => { stdout += data; });
-    process.stderr.on('data', (data) => { stderr += data; });
+    child.stdout.on('data', (data) => { stdout += data; });
+    child.stderr.on('data', (data) => { stderr += data; });
 
-    process.on('close', (code) => {
+    child.on('close', (code) => {
       if (code !== 0) {
         reject(new Error(stderr || `yt-dlp exited with code ${code}`));
         return;
@@ -68,8 +68,8 @@ export function runYtDlp(args: string[]): Promise<string> {
       resolve(stdout);
     });
 
-    process.on('error', (err: any) => {
-      // Fallback for Windows if .exe is not in path but command is
+    child.on('error', (err: any) => {
+      // Use global process.platform (no shadowing)
       if (err.code === 'ENOENT' && process.platform === 'win32') {
         // Retry with just 'yt-dlp' in case it's a script/alias
         return resolve(runYtDlpSimple('yt-dlp', args));
