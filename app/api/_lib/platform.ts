@@ -65,13 +65,23 @@ export async function buildInfoResponse(
       '--no-playlist',
       '--no-warnings',
       '--no-check-certificates',
+      '--prefer-free-formats',
+      '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       '--socket-timeout', '15',
       ...extraArgs,
       url,
     ]);
 
-    // yt-dlp may return multiple JSON lines — take first (video entry)
-    const info = JSON.parse(stdout.trim().split('\n')[0]);
+    // Find the first line that starts with { (actual JSON)
+    // yt-dlp might output some other text even with --no-warnings
+    const lines = stdout.trim().split('\n');
+    const jsonLine = lines.find(line => line.trim().startsWith('{'));
+    
+    if (!jsonLine) {
+      throw new Error('لم يتم العثور على بيانات صالحة (JSON) في مخرجات المحرك.');
+    }
+
+    const info = JSON.parse(jsonLine);
 
     return NextResponse.json(
       {
@@ -83,7 +93,7 @@ export async function buildInfoResponse(
     );
   } catch (err: any) {
     const msg: string = err?.message || '';
-    console.error('[yt-dlp info error]', msg);
+    console.error('[yt-dlp info error full]', err);
 
     if (msg.includes('not recognized') || msg.includes('No such file') || msg.includes('command not found')) {
       return NextResponse.json(
@@ -91,14 +101,23 @@ export async function buildInfoResponse(
         { status: 500, headers: corsHeaders }
       );
     }
+    
     if (msg.includes('Unsupported URL') || msg.includes('Unable to extract')) {
       return NextResponse.json(
         { error: 'الرابط غير مدعوم أو لا يحتوي على فيديو.' },
         { status: 422, headers: corsHeaders }
       );
     }
+
+    if (msg.includes('Video unavailable') || msg.includes('private video')) {
+      return NextResponse.json(
+        { error: 'الفيديو غير متاح حالياً (ربما خاص أو محذوف).' },
+        { status: 404, headers: corsHeaders }
+      );
+    }
+
     return NextResponse.json(
-      { error: 'حدث خطأ أثناء جلب معلومات الوسائط. تحقق من الرابط وحاول مرة أخرى.' },
+      { error: `خطأ: ${msg.substring(0, 100)}...` }, 
       { status: 500, headers: corsHeaders }
     );
   }
