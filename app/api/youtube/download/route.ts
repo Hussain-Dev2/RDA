@@ -12,7 +12,10 @@ const FORMAT_MAP = {
   },
 };
 
-const EXTRA = ['--extractor-args', 'youtube:player_client=android'];
+const EXTRA = [
+  '--extractor-args', 'youtube:player_client=ios,android,web_creator',
+  '--referer', 'https://www.youtube.com/',
+];
 
 export async function OPTIONS() { return optionsResponse(); }
 
