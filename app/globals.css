@@ -1,33 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&display=swap');
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #0f0c29;
+  --color-background: #0a0a0f;
   --color-foreground: #ffffff;
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: 'IBM Plex Sans Arabic', 'Noto Sans Arabic', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
 }
 
 :root {
-  --background: #0f0c29;
+  --background: #0a0a0f;
   --foreground: #ffffff;
 }
 
 body {
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-  background-attachment: fixed;
+  background: #0a0a0f;
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-family: 'IBM Plex Sans Arabic', 'Noto Sans Arabic', sans-serif;
   min-height: 100vh;
   margin: 0;
 }
 
-/* Glassmorphism utility classes */
-@layer utilities {
-  .glass-card {
-    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
-  }
-  
-  .glass-input {
-    @apply bg-white/5 border border-white/10 text-white placeholder-white/50 backdrop-blur-md focus:bg-white/10 focus:border-white/30 focus:ring-2 focus:ring-white/20 transition-all outline-none;
-  }
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(255,255,255,0.15);
 }
