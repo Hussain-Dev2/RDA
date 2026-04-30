@@ -39,14 +39,18 @@ export const DEFAULT_FORMAT_MAP: FormatMap = {
 };
 
 // ── Platform-specific commands ──────────────────────────────────────────────
-const YT_DLP = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp';
-const FFMPEG = process.platform === 'win32' ? 'ffmpeg.exe' : 'ffmpeg';
+const YT_DLP = 'yt-dlp';
+const FFMPEG = 'ffmpeg';
 
 // ── Core spawn wrapper ─────────────────────────────────────────────────────
 export function runYtDlp(args: string[]): Promise<string> {
   return new Promise((resolve, reject) => {
-    // We avoid shell: true to prevent syntax errors with special chars (like parens in User-Agent)
+    // On Windows, shell: true is often needed to find commands in PATH.
+    // On Linux/Docker, shell: false is safer to avoid shell syntax errors with special chars.
+    const useShell = process.platform === 'win32';
+    
     const child = spawn(YT_DLP, args, { 
+      shell: useShell,
       maxBuffer: 10 * 1024 * 1024 
     } as any);
 
@@ -69,25 +73,8 @@ export function runYtDlp(args: string[]): Promise<string> {
     });
 
     child.on('error', (err: any) => {
-      // Use global process.platform (no shadowing)
-      if (err.code === 'ENOENT' && process.platform === 'win32') {
-        // Retry with just 'yt-dlp' in case it's a script/alias
-        return resolve(runYtDlpSimple('yt-dlp', args));
-      }
       reject(err);
     });
-  });
-}
-
-// Simple fallback helper
-function runYtDlpSimple(cmd: string, args: string[]): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const p = spawn(cmd, args);
-    let o = ''; let e = '';
-    p.stdout.on('data', (d) => o += d);
-    p.stderr.on('data', (d) => e += d);
-    p.on('close', (c) => c === 0 ? resolve(o) : reject(new Error(e)));
-    p.on('error', (err) => reject(err));
   });
 }
 
@@ -194,6 +181,8 @@ export function buildMp3Response(
   bitrate: string,
   extraArgs: string[] = []
 ): NextResponse {
+  const useShell = process.platform === 'win32';
+
   const ytdlp = spawn(YT_DLP, [
     '--no-playlist',
     '--no-warnings',
@@ -203,7 +192,7 @@ export function buildMp3Response(
     '-f', format,
     ...extraArgs,
     url,
-  ]);
+  ], { shell: useShell });
 
   const ffmpeg = spawn(FFMPEG, [
     '-i', 'pipe:0',
@@ -211,7 +200,7 @@ export function buildMp3Response(
     '-acodec', 'libmp3lame',
     '-ab', bitrate,
     'pipe:1',
-  ]);
+  ], { shell: useShell });
 
   ytdlp.stdout.pipe(ffmpeg.stdin);
   ytdlp.stderr.on('data', (d) => console.error('[yt-dlp mp3]', d.toString()));
