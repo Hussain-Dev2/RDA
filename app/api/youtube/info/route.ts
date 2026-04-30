@@ -14,7 +14,16 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'يرجى إدخال رابط YouTube صحيح.' }, { status: 422, headers: corsHeaders });
   }
 
-  return buildInfoResponse(url, [
+  let cleanUrl = url;
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname.includes('youtube.com')) {
+      const v = parsed.searchParams.get('v');
+      if (v) cleanUrl = `https://www.youtube.com/watch?v=${v}`;
+    }
+  } catch (e) {}
+
+  return buildInfoResponse(cleanUrl, [
     '--referer', 'https://www.youtube.com/',
   ]);
 }

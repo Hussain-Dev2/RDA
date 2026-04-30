@@ -28,8 +28,17 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'رابط غير صحيح' }, { status: 422 });
   }
 
-  if (type === 'mp4') return buildMp4Response(url, FORMAT_MAP.mp4[quality], EXTRA);
-  if (type === 'mp3') return buildMp3Response(url, FORMAT_MAP.mp3[quality], qualityToBitrate(quality), EXTRA);
+  let cleanUrl = url;
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname.includes('youtube.com')) {
+      const v = parsed.searchParams.get('v');
+      if (v) cleanUrl = `https://www.youtube.com/watch?v=${v}`;
+    }
+  } catch (e) {}
+
+  if (type === 'mp4') return buildMp4Response(cleanUrl, FORMAT_MAP.mp4[quality], EXTRA);
+  if (type === 'mp3') return buildMp3Response(cleanUrl, FORMAT_MAP.mp3[quality], qualityToBitrate(quality), EXTRA);
 
   return NextResponse.json({ error: 'Invalid type' }, { status: 400 });
 }
