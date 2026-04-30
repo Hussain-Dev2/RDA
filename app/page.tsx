@@ -172,8 +172,9 @@ export default function Home() {
     setVideoInfo(null);
 
     try {
-      // Use site-specific API route
-      const fetchUrl = `/api/${activeSite.id}/info?url=${encodeURIComponent(trimmed)}`;
+      // Allow pointing to a remote backend (e.g. Render) via environment variable
+      const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
+      const fetchUrl = `${apiBase}/api/${activeSite.id}/info?url=${encodeURIComponent(trimmed)}`;
       
       console.log("Attempting fetch to:", fetchUrl);
 

@@ -33,8 +33,10 @@ export default function ResultCard({ info, url, accentColor = "#3b82f6", siteId 
   const handleDownload = () => {
     setLoading(true);
     setDone(false);
-    // Use site-specific download API
-    const downloadUrl = `/api/${siteId}/download?type=${format}&quality=${quality}&url=${encodeURIComponent(url)}`;
+
+    // Allow pointing to a remote backend (e.g. Render) via environment variable
+    const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
+    const downloadUrl = `${apiBase}/api/${siteId}/download?type=${format}&quality=${quality}&url=${encodeURIComponent(url)}`;
 
     if (format === "mp4") {
       window.location.href = downloadUrl;
