@@ -38,11 +38,15 @@ export const DEFAULT_FORMAT_MAP: FormatMap = {
   },
 };
 
+// ── Platform-specific commands ──────────────────────────────────────────────
+const YT_DLP = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp';
+const FFMPEG = process.platform === 'win32' ? 'ffmpeg.exe' : 'ffmpeg';
+
 // ── Core spawn wrapper ─────────────────────────────────────────────────────
 export function runYtDlp(args: string[]): Promise<string> {
   return new Promise((resolve, reject) => {
-    const process = spawn('yt-dlp', args, { 
-      shell: true,
+    // We avoid shell: true to prevent syntax errors with special chars (like parens in User-Agent)
+    const process = spawn(YT_DLP, args, { 
       maxBuffer: 10 * 1024 * 1024 
     } as any);
 
@@ -64,9 +68,26 @@ export function runYtDlp(args: string[]): Promise<string> {
       resolve(stdout);
     });
 
-    process.on('error', (err) => {
+    process.on('error', (err: any) => {
+      // Fallback for Windows if .exe is not in path but command is
+      if (err.code === 'ENOENT' && process.platform === 'win32') {
+        // Retry with just 'yt-dlp' in case it's a script/alias
+        return resolve(runYtDlpSimple('yt-dlp', args));
+      }
       reject(err);
     });
+  });
+}
+
+// Simple fallback helper
+function runYtDlpSimple(cmd: string, args: string[]): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const p = spawn(cmd, args);
+    let o = ''; let e = '';
+    p.stdout.on('data', (d) => o += d);
+    p.stderr.on('data', (d) => e += d);
+    p.on('close', (c) => c === 0 ? resolve(o) : reject(new Error(e)));
+    p.on('error', (err) => reject(err));
   });
 }
 
@@ -88,7 +109,6 @@ export async function buildInfoResponse(
       url,
     ]);
 
-    // Find the first line that starts with { (actual JSON)
     const lines = stdout.trim().split('\n');
     const jsonLine = lines.find(line => line.trim().startsWith('{'));
     
@@ -110,9 +130,9 @@ export async function buildInfoResponse(
     const msg: string = err?.message || '';
     console.error('[yt-dlp info error full]', err);
 
-    if (msg.includes('not recognized') || msg.includes('No such file') || msg.includes('command not found') || msg.includes('ENOENT')) {
+    if (msg.includes('ENOENT') || msg.includes('not found')) {
       return NextResponse.json(
-        { error: 'yt-dlp غير مثبت أو غير معرف في مسار النظام (PATH).' },
+        { error: 'المحرك غير مثبت أو غير معرف في مسار النظام (PATH).' },
         { status: 500, headers: corsHeaders }
       );
     }
@@ -174,7 +194,7 @@ export function buildMp3Response(
   bitrate: string,
   extraArgs: string[] = []
 ): NextResponse {
-  const ytdlp = spawn('yt-dlp', [
+  const ytdlp = spawn(YT_DLP, [
     '--no-playlist',
     '--no-warnings',
     '--no-check-certificates',
@@ -183,15 +203,15 @@ export function buildMp3Response(
     '-f', format,
     ...extraArgs,
     url,
-  ], { shell: true });
+  ]);
 
-  const ffmpeg = spawn('ffmpeg', [
+  const ffmpeg = spawn(FFMPEG, [
     '-i', 'pipe:0',
     '-f', 'mp3',
     '-acodec', 'libmp3lame',
     '-ab', bitrate,
     'pipe:1',
-  ], { shell: true });
+  ]);
 
   ytdlp.stdout.pipe(ffmpeg.stdin);
   ytdlp.stderr.on('data', (d) => console.error('[yt-dlp mp3]', d.toString()));
