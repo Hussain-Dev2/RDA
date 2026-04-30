@@ -2,8 +2,39 @@
  * Shared yt-dlp utility for all platform API routes.
  * Each platform imports this and passes its own args/format overrides.
  */
-import { execFile, spawn } from 'child_process';
+import { spawn } from 'child_process';
 import { NextResponse } from 'next/server';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
+
+/**
+ * Helper to handle YT_COOKIES env var and create a temp file for yt-dlp
+ */
+function getCookiesPath(): string | null {
+  const cookiesData = process.env.YT_COOKIES;
+  if (!cookiesData) return null;
+
+  try {
+    const tempDir = os.tmpdir();
+    const filePath = path.join(tempDir, `youtube_cookies_${Date.now()}.txt`);
+    fs.writeFileSync(filePath, cookiesData);
+    return filePath;
+  } catch (err) {
+    console.error("Error creating temp cookies file:", err);
+    return null;
+  }
+}
+
+function cleanupCookies(filePath: string | null) {
+  if (filePath && fs.existsSync(filePath)) {
+    try {
+      fs.unlinkSync(filePath);
+    } catch (err) {
+      console.error("Error deleting temp cookies file:", err);
+    }
+  }
+}
 
 // ── CORS ─────────────────────────────────────────────────────────────────────
 export const corsHeaders = {
@@ -43,13 +74,18 @@ const YT_DLP = 'yt-dlp';
 const FFMPEG = 'ffmpeg';
 
 // ── Core spawn wrapper ─────────────────────────────────────────────────────
-export function runYtDlp(args: string[]): Promise<string> {
+export function runYtDlp(args: string[], cookiesPath?: string | null): Promise<string> {
   return new Promise((resolve, reject) => {
+    const finalArgs = [...args];
+    if (cookiesPath) {
+      finalArgs.unshift('--cookies', cookiesPath);
+    }
+
     // On Windows, shell: true is often needed to find commands in PATH.
     // On Linux/Docker, shell: false is safer to avoid shell syntax errors with special chars.
     const useShell = process.platform === 'win32';
     
-    const child = spawn(YT_DLP, args, { 
+    const child = spawn(YT_DLP, finalArgs, { 
       shell: useShell,
       maxBuffer: 10 * 1024 * 1024 
     } as any);
@@ -83,6 +119,7 @@ export async function buildInfoResponse(
   url: string,
   extraArgs: string[] = []
 ): Promise<NextResponse> {
+  const cookiesPath = url.includes('youtube.com') || url.includes('youtu.be') ? getCookiesPath() : null;
   try {
     const stdout = await runYtDlp([
       '--dump-json',
@@ -95,7 +132,7 @@ export async function buildInfoResponse(
       '--socket-timeout', '15',
       ...extraArgs,
       url,
-    ]);
+    ], cookiesPath);
 
     const lines = stdout.trim().split('\n');
     const jsonLine = lines.find(line => line.trim().startsWith('{'));
@@ -152,6 +189,7 @@ export async function buildMp4Response(
   format: string,
   extraArgs: string[] = []
 ): Promise<NextResponse> {
+  const cookiesPath = url.includes('youtube.com') || url.includes('youtu.be') ? getCookiesPath() : null;
   try {
     const stdout = await runYtDlp([
       '--no-playlist',
@@ -162,7 +200,7 @@ export async function buildMp4Response(
       '-g',
       ...extraArgs,
       url,
-    ]);
+    ], cookiesPath);
     const directUrl = stdout.trim().split('\n')[0];
     if (!directUrl) throw new Error('Empty URL from yt-dlp');
     return NextResponse.redirect(directUrl);
@@ -172,6 +210,8 @@ export async function buildMp4Response(
       { error: 'فشل في معالجة رابط الفيديو.' },
       { status: 500, headers: corsHeaders }
     );
+  } finally {
+    cleanupCookies(cookiesPath);
   }
 }
 
@@ -182,9 +222,10 @@ export function buildMp3Response(
   bitrate: string,
   extraArgs: string[] = []
 ): NextResponse {
+  const cookiesPath = url.includes('youtube.com') || url.includes('youtu.be') ? getCookiesPath() : null;
   const useShell = process.platform === 'win32';
 
-  const ytdlp = spawn(YT_DLP, [
+  const ytArgs = [
     '--no-playlist',
     '--no-warnings',
     '--no-check-certificates',
@@ -193,7 +234,16 @@ export function buildMp3Response(
     '-f', format,
     ...extraArgs,
     url,
-  ], { shell: useShell });
+  ];
+
+  if (cookiesPath) {
+    ytArgs.unshift('--cookies', cookiesPath);
+  }
+
+  const ytdlp = spawn(YT_DLP, ytArgs, { shell: useShell });
+  
+  // Cleanup cookies when ytdlp ends
+  ytdlp.on('close', () => cleanupCookies(cookiesPath));
 
   const ffmpeg = spawn(FFMPEG, [
     '-i', 'pipe:0',
