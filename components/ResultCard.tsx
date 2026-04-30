@@ -38,16 +38,19 @@ export default function ResultCard({ info, url, accentColor = "#3b82f6", siteId 
     const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
     const downloadUrl = `${apiBase}/api/${siteId}/download?type=${format}&quality=${quality}&url=${encodeURIComponent(url)}`;
 
-    if (format === "mp4") {
-      window.location.href = downloadUrl;
-    } else {
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = `${info.title.substring(0, 40).replace(/[^\w\s-]/g, "")}.mp3`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
+    // Create a clean filename
+    const cleanTitle = info.title.replace(/[^\w\s-]/g, '').substring(0, 50).trim();
+    const fileName = `${cleanTitle}.${format}`;
+
+    // Force download using hidden link
+    const a = document.createElement("a");
+    a.href = downloadUrl;
+    a.download = fileName;
+    // For cross-origin requests, we add target="_blank" as a fallback
+    a.target = "_blank"; 
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 
     setTimeout(() => { setLoading(false); setDone(true); }, 3000);
     setTimeout(() => setDone(false), 6000);
