@@ -38,19 +38,35 @@ export const DEFAULT_FORMAT_MAP: FormatMap = {
   },
 };
 
-// ── Core execFile wrapper ─────────────────────────────────────────────────────
+// ── Core spawn wrapper ─────────────────────────────────────────────────────
 export function runYtDlp(args: string[]): Promise<string> {
   return new Promise((resolve, reject) => {
-    execFile(
-      'yt-dlp',
-      args,
-      { maxBuffer: 10 * 1024 * 1024 },
-      (error, stdout, stderr) => {
-        if (error) { reject(new Error(stderr || error.message)); return; }
-        if (!stdout.trim()) { reject(new Error('yt-dlp returned no output')); return; }
-        resolve(stdout);
+    const process = spawn('yt-dlp', args, { 
+      shell: true,
+      maxBuffer: 10 * 1024 * 1024 
+    } as any);
+
+    let stdout = '';
+    let stderr = '';
+
+    process.stdout.on('data', (data) => { stdout += data; });
+    process.stderr.on('data', (data) => { stderr += data; });
+
+    process.on('close', (code) => {
+      if (code !== 0) {
+        reject(new Error(stderr || `yt-dlp exited with code ${code}`));
+        return;
       }
-    );
+      if (!stdout.trim()) {
+        reject(new Error('yt-dlp returned no output'));
+        return;
+      }
+      resolve(stdout);
+    });
+
+    process.on('error', (err) => {
+      reject(err);
+    });
   });
 }
 
@@ -73,7 +89,6 @@ export async function buildInfoResponse(
     ]);
 
     // Find the first line that starts with { (actual JSON)
-    // yt-dlp might output some other text even with --no-warnings
     const lines = stdout.trim().split('\n');
     const jsonLine = lines.find(line => line.trim().startsWith('{'));
     
@@ -95,9 +110,9 @@ export async function buildInfoResponse(
     const msg: string = err?.message || '';
     console.error('[yt-dlp info error full]', err);
 
-    if (msg.includes('not recognized') || msg.includes('No such file') || msg.includes('command not found')) {
+    if (msg.includes('not recognized') || msg.includes('No such file') || msg.includes('command not found') || msg.includes('ENOENT')) {
       return NextResponse.json(
-        { error: 'yt-dlp غير مثبت على السيرفر.' },
+        { error: 'yt-dlp غير مثبت أو غير معرف في مسار النظام (PATH).' },
         { status: 500, headers: corsHeaders }
       );
     }
@@ -117,7 +132,7 @@ export async function buildInfoResponse(
     }
 
     return NextResponse.json(
-      { error: `خطأ: ${msg.substring(0, 100)}...` }, 
+      { error: `خطأ في المحرك: ${msg.substring(0, 100)}...` }, 
       { status: 500, headers: corsHeaders }
     );
   }
@@ -168,7 +183,7 @@ export function buildMp3Response(
     '-f', format,
     ...extraArgs,
     url,
-  ]);
+  ], { shell: true });
 
   const ffmpeg = spawn('ffmpeg', [
     '-i', 'pipe:0',
@@ -176,7 +191,7 @@ export function buildMp3Response(
     '-acodec', 'libmp3lame',
     '-ab', bitrate,
     'pipe:1',
-  ]);
+  ], { shell: true });
 
   ytdlp.stdout.pipe(ffmpeg.stdin);
   ytdlp.stderr.on('data', (d) => console.error('[yt-dlp mp3]', d.toString()));
