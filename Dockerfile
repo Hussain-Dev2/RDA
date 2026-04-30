@@ -16,8 +16,9 @@ ENV NODE_ENV production
 
 # Install system dependencies: Python3, pip, FFmpeg
 RUN apk update && \
-    apk add --no-cache python3 py3-pip ffmpeg && \
-    pip3 install --no-cache-dir yt-dlp --break-system-packages
+    apk add --no-cache python3 ffmpeg curl && \
+    curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && \
+    chmod a+rx /usr/local/bin/yt-dlp
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
