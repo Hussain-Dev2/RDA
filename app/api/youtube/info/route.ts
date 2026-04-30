@@ -15,8 +15,6 @@ export async function GET(request: Request) {
   }
 
   return buildInfoResponse(url, [
-    '--extractor-args', 'youtube:player_client=ios,android,web_creator',
-    // Referer helps with some signature issues
     '--referer', 'https://www.youtube.com/',
   ]);
 }
