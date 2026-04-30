@@ -12,16 +12,39 @@ import path from 'path';
  * Helper to handle YT_COOKIES env var and create a temp file for yt-dlp
  */
 function getCookiesPath(): string | null {
-  const cookiesData = process.env.YT_COOKIES;
-  if (!cookiesData) return null;
+  let cookiesData = (process.env.YT_COOKIES || '').trim();
+  if (!cookiesData) {
+    console.log("[Cookies] YT_COOKIES environment variable is missing.");
+    return null;
+  }
+
+  // Check if it's Base64 encoded
+  if (!cookiesData.includes('\t') && !cookiesData.includes(' ') && cookiesData.length > 50) {
+    try {
+      // Netscape files usually start with # Netscape (IyBOZXRzY2FwZ in base64)
+      if (cookiesData.startsWith('IyB') || cookiesData.length % 4 === 0) {
+        console.log("[Cookies] Detected Base64 encoding, decoding...");
+        cookiesData = Buffer.from(cookiesData, 'base64').toString('utf-8');
+      }
+    } catch (e) {
+      console.log("[Cookies] Failed to decode Base64, using raw data.");
+    }
+  }
+
+  // Attempt to fix common mangling where newlines are replaced by spaces
+  if (!cookiesData.includes('\n') && cookiesData.includes('.youtube.com')) {
+     console.log("[Cookies] Detected potential newline mangling, attempting fix...");
+     cookiesData = cookiesData.replace(/(\.youtube\.com\s+TRUE\s+\/\s+(TRUE|FALSE)\s+\d+\s+[\w-]+)/g, '\n$1');
+  }
 
   try {
     const tempDir = os.tmpdir();
     const filePath = path.join(tempDir, `youtube_cookies_${Date.now()}.txt`);
-    fs.writeFileSync(filePath, cookiesData);
+    fs.writeFileSync(filePath, cookiesData.trim());
+    console.log(`[Cookies] Created temp file, size: ${cookiesData.length} bytes`);
     return filePath;
   } catch (err) {
-    console.error("Error creating temp cookies file:", err);
+    console.error("[Cookies] Error creating temp cookies file:", err);
     return null;
   }
 }
