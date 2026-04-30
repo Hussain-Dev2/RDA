@@ -3,7 +3,10 @@
 import { optionsResponse, corsHeaders, buildMp4Response, buildMp3Response, qualityToBitrate, getParam, Quality } from '../../_lib/platform';
 import { NextResponse } from 'next/server';
 
-const EXTRA = ['--user-agent', 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15'];
+const EXTRA = [
+  '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  '--referer', 'https://www.tiktok.com/',
+];
 
 const FORMAT_MAP = {
   mp4: {
