@@ -214,8 +214,9 @@ export async function buildInfoResponse(
 export async function buildMp4Response(
   url: string,
   format: string,
-  extraArgs: string[] = []
-): Promise<NextResponse> {
+  extraArgs: string[] = [],
+  filename?: string
+): Promise<Response> {
   const cookiesPath = url.includes('youtube.com') || url.includes('youtu.be') ? getCookiesPath() : null;
   try {
     const stdout = await runYtDlp([
@@ -228,15 +229,28 @@ export async function buildMp4Response(
       ...extraArgs,
       url,
     ], cookiesPath);
+    
     const directUrl = stdout.trim().split('\n')[0];
     if (!directUrl) throw new Error('Empty URL from yt-dlp');
-    return NextResponse.redirect(directUrl);
+
+    // Proxy the stream to set proper attachment headers
+    const res = await fetch(directUrl);
+    const headers = new Headers(res.headers);
+    
+    const safeName = filename ? filename.replace(/[^\w\s.-]/g, '') : 'video.mp4';
+    headers.set('Content-Disposition', `attachment; filename="${safeName}"`);
+    headers.set('Content-Type', 'video/mp4');
+
+    return new Response(res.body, {
+      status: 200,
+      headers
+    });
   } catch (err: any) {
     console.error('[mp4 download error]', err?.message);
     return NextResponse.json(
       { error: 'فشل في معالجة رابط الفيديو.' },
       { status: 500, headers: corsHeaders }
-    );
+    ) as any;
   } finally {
     cleanupCookies(cookiesPath);
   }
