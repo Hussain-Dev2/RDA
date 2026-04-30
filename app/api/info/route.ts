@@ -20,7 +20,10 @@ export async function GET(request: Request) {
   const url = searchParams.get('url');
 
   if (!url) {
-    return NextResponse.json({ error: 'URL is required' }, { status: 400 }, { headers: corsHeaders });
+    return NextResponse.json(
+      { error: 'URL is required' }, 
+      { status: 400, headers: corsHeaders }
+    );
   }
 
   try {
@@ -47,9 +50,15 @@ export async function GET(request: Request) {
     if (error.message?.includes('not recognized') || error.message?.includes('command not found')) {
       return NextResponse.json({ 
         error: 'Media processor (yt-dlp) not found. Please restart your terminal or ensure it is installed.' 
-      }, { status: 500 }, { headers: corsHeaders });
+      }, { 
+        status: 500, 
+        headers: corsHeaders 
+      });
     }
 
-    return NextResponse.json({ error: 'Could not fetch info for this URL.' }, { status: 500 }, { headers: corsHeaders });
+    return NextResponse.json(
+      { error: 'Could not fetch info for this URL.' }, 
+      { status: 500, headers: corsHeaders }
+    );
   }
 }

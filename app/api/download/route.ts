@@ -21,7 +21,10 @@ export async function GET(request: Request) {
   const quality = searchParams.get('quality') || 'high';
 
   if (!url || !type) {
-    return NextResponse.json({ error: 'URL and type are required' }, { status: 400 }, { headers: corsHeaders });
+    return NextResponse.json(
+      { error: 'URL and type are required' }, 
+      { status: 400, headers: corsHeaders }
+    );
   }
 
   const safeUrl = url.replace(/"/g, '\\"');
@@ -46,10 +49,18 @@ export async function GET(request: Request) {
       const { stdout } = await execAsync(`yt-dlp -f "${selectedFormat}" -g "${safeUrl}"`);
       const directUrl = stdout.trim().split('\n')[0];
 
-      if (!directUrl) return NextResponse.json({ error: 'Format not available' }, { status: 404 }, { headers: corsHeaders });
+      if (!directUrl) {
+        return NextResponse.json(
+          { error: 'Format not available' }, 
+          { status: 404, headers: corsHeaders }
+        );
+      }
       return NextResponse.redirect(directUrl);
     } catch (error) {
-      return NextResponse.json({ error: 'Processing failed' }, { status: 500 }, { headers: corsHeaders });
+      return NextResponse.json(
+        { error: 'Processing failed' }, 
+        { status: 500, headers: corsHeaders }
+      );
     }
   } else if (type === 'mp3') {
     try {
@@ -78,9 +89,15 @@ export async function GET(request: Request) {
         },
       });
     } catch (error) {
-      return NextResponse.json({ error: 'Conversion failed' }, { status: 500 }, { headers: corsHeaders });
+      return NextResponse.json(
+        { error: 'Conversion failed' }, 
+        { status: 500, headers: corsHeaders }
+      );
     }
   }
 
-  return NextResponse.json({ error: 'Invalid type' }, { status: 400 }, { headers: corsHeaders });
+  return NextResponse.json(
+    { error: 'Invalid type' }, 
+    { status: 400, headers: corsHeaders }
+  );
 }
