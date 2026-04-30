@@ -1,8 +1,5 @@
 import { NextResponse } from 'next/server';
-import { spawn, exec } from 'child_process';
-import { promisify } from 'util';
-
-const execAsync = promisify(exec);
+import { spawn, execFile } from 'child_process';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -22,52 +19,93 @@ export async function GET(request: Request) {
 
   if (!url || !type) {
     return NextResponse.json(
-      { error: 'URL and type are required' }, 
+      { error: 'URL and type are required' },
       { status: 400, headers: corsHeaders }
     );
   }
 
-  const safeUrl = url.replace(/"/g, '\\"');
-
   const formatMap = {
     mp4: {
-      high: "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
-      medium: "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best[height<=720][ext=mp4]/best",
-      low: "worstvideo[ext=mp4]+worstaudio[ext=m4a]/worst[ext=mp4]/worst"
+      high: 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+      medium: 'bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best[height<=720][ext=mp4]/best',
+      low: 'worstvideo[ext=mp4]+worstaudio[ext=m4a]/worst[ext=mp4]/worst',
     },
     mp3: {
-      high: "bestaudio",
-      medium: "bestaudio[abr<=128]",
-      low: "worstaudio"
-    }
+      high: 'bestaudio',
+      medium: 'bestaudio[abr<=128]',
+      low: 'worstaudio',
+    },
   };
 
-  const selectedFormat = formatMap[type as keyof typeof formatMap]?.[quality as keyof (typeof formatMap)['mp4']] || formatMap.mp4.high;
+  const selectedFormat =
+    formatMap[type as keyof typeof formatMap]?.[
+      quality as keyof (typeof formatMap)['mp4']
+    ] || formatMap.mp4.high;
 
+  // ── MP4: resolve direct URL and redirect ────────────────────────────────────
   if (type === 'mp4') {
     try {
-      const { stdout } = await execAsync(`yt-dlp -f "${selectedFormat}" -g "${safeUrl}"`);
-      const directUrl = stdout.trim().split('\n')[0];
-
-      if (!directUrl) {
-        return NextResponse.json(
-          { error: 'Format not available' }, 
-          { status: 404, headers: corsHeaders }
+      const directUrl = await new Promise<string>((resolve, reject) => {
+        execFile(
+          'yt-dlp',
+          [
+            '--no-playlist',
+            '--no-warnings',
+            '--no-check-certificates',
+            '--socket-timeout', '15',
+            '-f', selectedFormat,
+            '-g',       // print URL only
+            url,
+          ],
+          { maxBuffer: 5 * 1024 * 1024 },
+          (error, stdout, stderr) => {
+            if (error) { reject(new Error(stderr || error.message)); return; }
+            const line = stdout.trim().split('\n')[0];
+            if (!line) { reject(new Error('Empty URL from yt-dlp')); return; }
+            resolve(line);
+          }
         );
-      }
+      });
+
       return NextResponse.redirect(directUrl);
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Download MP4 error:', error?.message);
       return NextResponse.json(
-        { error: 'Processing failed' }, 
+        { error: 'فشل في معالجة رابط الفيديو. حاول مرة أخرى.' },
         { status: 500, headers: corsHeaders }
       );
     }
-  } else if (type === 'mp3') {
+  }
+
+  // ── MP3: stream through ffmpeg ───────────────────────────────────────────────
+  if (type === 'mp3') {
     try {
-      const ytdlp = spawn('yt-dlp', ['-o', '-', '-f', selectedFormat, url]);
-      const ffmpeg = spawn('ffmpeg', ['-i', 'pipe:0', '-f', 'mp3', '-acodec', 'libmp3lame', '-ab', quality === 'high' ? '320k' : quality === 'medium' ? '128k' : '64k', 'pipe:1']);
+      const bitrateArg =
+        quality === 'high' ? '320k' : quality === 'medium' ? '128k' : '64k';
+
+      const ytdlp = spawn('yt-dlp', [
+        '--no-playlist',
+        '--no-warnings',
+        '--no-check-certificates',
+        '--socket-timeout', '15',
+        '-o', '-',
+        '-f', selectedFormat,
+        url,
+      ]);
+
+      const ffmpeg = spawn('ffmpeg', [
+        '-i', 'pipe:0',
+        '-f', 'mp3',
+        '-acodec', 'libmp3lame',
+        '-ab', bitrateArg,
+        'pipe:1',
+      ]);
 
       ytdlp.stdout.pipe(ffmpeg.stdin);
+
+      // Forward yt-dlp errors to ffmpeg so stream doesn't hang
+      ytdlp.stderr.on('data', (d) => console.error('[yt-dlp]', d.toString()));
+      ffmpeg.stderr.on('data', (d) => console.error('[ffmpeg]', d.toString()));
 
       const stream = new ReadableStream({
         start(controller) {
@@ -78,26 +116,27 @@ export async function GET(request: Request) {
         cancel() {
           ytdlp.kill();
           ffmpeg.kill();
-        }
+        },
       });
 
       return new NextResponse(stream, {
         headers: {
           ...corsHeaders,
           'Content-Type': 'audio/mpeg',
-          'Content-Disposition': `attachment; filename="audio.mp3"`,
+          'Content-Disposition': 'attachment; filename="audio.mp3"',
         },
       });
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Download MP3 error:', error?.message);
       return NextResponse.json(
-        { error: 'Conversion failed' }, 
+        { error: 'فشل في تحويل الصوت. حاول مرة أخرى.' },
         { status: 500, headers: corsHeaders }
       );
     }
   }
 
   return NextResponse.json(
-    { error: 'Invalid type' }, 
+    { error: 'نوع التحميل غير صحيح.' },
     { status: 400, headers: corsHeaders }
   );
 }

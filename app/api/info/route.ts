@@ -1,10 +1,6 @@
 import { NextResponse } from 'next/server';
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { execFile } from 'child_process';
 
-const execAsync = promisify(exec);
-
-// CORS headers shared across methods
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
@@ -21,43 +17,76 @@ export async function GET(request: Request) {
 
   if (!url) {
     return NextResponse.json(
-      { error: 'URL is required' }, 
+      { error: 'URL is required' },
       { status: 400, headers: corsHeaders }
     );
   }
 
   try {
-    const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36";
-    const command = `yt-dlp --dump-json --no-playlist --flat-playlist --no-warnings --no-check-certificates --prefer-free-formats --user-agent "${userAgent}" --referer "https://www.google.com/" "${url.replace(/"/g, '\\"')}"`;
-    const { stdout, stderr } = await execAsync(command);
+    const stdout = await new Promise<string>((resolve, reject) => {
+      // Use execFile with args array — no shell injection, handles & and = safely
+      execFile(
+        'yt-dlp',
+        [
+          '--dump-json',
+          '--no-playlist',      // Take only the first video, ignore playlist
+          '--no-warnings',
+          '--no-check-certificates',
+          '--socket-timeout', '15',
+          url,
+        ],
+        { maxBuffer: 10 * 1024 * 1024 }, // 10MB buffer
+        (error, stdout, stderr) => {
+          if (error) {
+            reject(new Error(stderr || error.message));
+            return;
+          }
+          if (!stdout.trim()) {
+            reject(new Error('No output from yt-dlp'));
+            return;
+          }
+          resolve(stdout);
+        }
+      );
+    });
 
-    if (!stdout && stderr) {
-      throw new Error(stderr);
+    // yt-dlp may output multiple JSON lines (e.g., for playlists) — take only the first
+    const firstLine = stdout.trim().split('\n')[0];
+    const info = JSON.parse(firstLine);
+
+    return NextResponse.json(
+      {
+        title: info.title || 'Unknown Title',
+        thumbnail: info.thumbnail || info.thumbnails?.[0]?.url || '',
+        duration: info.duration || 0,
+      },
+      { headers: corsHeaders }
+    );
+  } catch (error: any) {
+    console.error('API /info Error:', error?.message || error);
+
+    const msg: string = error?.message || '';
+
+    if (
+      msg.includes('not recognized') ||
+      msg.includes('command not found') ||
+      msg.includes('No such file')
+    ) {
+      return NextResponse.json(
+        { error: 'yt-dlp غير مثبت على السيرفر. يرجى التواصل مع الدعم.' },
+        { status: 500, headers: corsHeaders }
+      );
     }
 
-    const info = JSON.parse(stdout);
-
-    return NextResponse.json({
-      title: info.title || 'Unknown Title',
-      thumbnail: info.thumbnail || info.thumbnails?.[0]?.url || '',
-      duration: info.duration || 0,
-    }, {
-      headers: corsHeaders
-    });
-  } catch (error: any) {
-    console.error('API Error:', error);
-    
-    if (error.message?.includes('not recognized') || error.message?.includes('command not found')) {
-      return NextResponse.json({ 
-        error: 'Media processor (yt-dlp) not found. Please restart your terminal or ensure it is installed.' 
-      }, { 
-        status: 500, 
-        headers: corsHeaders 
-      });
+    if (msg.includes('Unsupported URL') || msg.includes('no video')) {
+      return NextResponse.json(
+        { error: 'الرابط غير مدعوم أو لا يحتوي على فيديو.' },
+        { status: 422, headers: corsHeaders }
+      );
     }
 
     return NextResponse.json(
-      { error: 'Could not fetch info for this URL.' }, 
+      { error: 'حدث خطأ أثناء جلب معلومات الفيديو. تحقق من الرابط وحاول مرة أخرى.' },
       { status: 500, headers: corsHeaders }
     );
   }
