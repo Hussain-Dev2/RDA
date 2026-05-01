@@ -143,6 +143,38 @@ export function runYtDlp(args: string[], cookiesPath?: string | null): Promise<s
   });
 }
 
+// ── Cobalt API Fallback ───────────────────────────────────────────────────────
+async function fetchFromCobalt(url: string, isAudioOnly: boolean): Promise<string> {
+  const res = await fetch('https://api.cobalt.tools/api/json', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    },
+    body: JSON.stringify({
+      url: url,
+      vCodec: "h264",
+      vQuality: "720",
+      aFormat: "mp3",
+      isAudioOnly: isAudioOnly,
+      isNoTTWatermark: true,
+    })
+  });
+
+  if (!res.ok) {
+    throw new Error(`Cobalt API HTTP error: ${res.status}`);
+  }
+
+  const data = await res.json();
+  if (data.status === 'error') {
+    throw new Error(`Cobalt returned error: ${data.text}`);
+  }
+
+  if (data.url) return data.url;
+  throw new Error('Cobalt returned no URL');
+}
+
 // ── Fetch video info ──────────────────────────────────────────────────────────
 export async function buildInfoResponse(
   url: string,
@@ -258,7 +290,20 @@ export async function buildMp4Response(
       headers
     });
   } catch (err: any) {
-    console.error('[mp4 download error]', err?.message);
+    console.error('[mp4 download error, trying Cobalt fallback]', err?.message);
+    if (isYoutube) {
+      try {
+        const directUrl = await fetchFromCobalt(url, false);
+        const res = await fetch(directUrl);
+        const headers = new Headers(res.headers);
+        const safeName = filename ? filename.replace(/[^\w\s.-]/g, '') : 'video.mp4';
+        headers.set('Content-Disposition', `attachment; filename="${safeName}"`);
+        headers.set('Content-Type', 'video/mp4');
+        return new Response(res.body, { status: 200, headers });
+      } catch (cobaltErr: any) {
+        console.error('[Cobalt fallback error]', cobaltErr?.message);
+      }
+    }
     return NextResponse.json(
       { error: 'فشل في معالجة رابط الفيديو.' },
       { status: 500, headers: corsHeaders }
@@ -269,12 +314,12 @@ export async function buildMp4Response(
 }
 
 // ── MP3 download (stream through ffmpeg) ─────────────────────────────────────
-export function buildMp3Response(
+export async function buildMp3Response(
   url: string,
   format: string,
   bitrate: string,
   extraArgs: string[] = []
-): NextResponse {
+): Promise<NextResponse> {
   const isYoutube = url.includes('youtube.com') || url.includes('youtu.be');
   const cookiesPath = isYoutube ? getCookiesPath() : null;
   const useShell = process.platform === 'win32';
@@ -317,9 +362,53 @@ export function buildMp3Response(
       ffmpeg.stdout.on('data', (chunk) => controller.enqueue(chunk));
       ffmpeg.stdout.on('end', () => controller.close());
       ffmpeg.stdout.on('error', (err) => controller.error(err));
+      
+      // Fallback on early yt-dlp error
+      ytdlp.on('close', (code) => {
+        if (code !== 0) {
+          ffmpeg.kill();
+          controller.error(new Error(`yt-dlp exited with code ${code}`));
+        }
+      });
     },
     cancel() { ytdlp.kill(); ffmpeg.kill(); },
   });
+
+  // Handle stream error to trigger Cobalt fallback if yt-dlp fails immediately
+  try {
+    // If it fails immediately, it usually emits an error or closes before we can pipe.
+    // However, ReadableStream doesn't easily let us catch it here to return a different response,
+    // so we'll do a quick probe or rely on the stream failing. But to return a new Response, 
+    // we must catch the error before sending the headers.
+    
+    // We will wait 1 second to see if yt-dlp crashes immediately (e.g. format error).
+    await new Promise<void>((resolve, reject) => {
+      let resolved = false;
+      ytdlp.on('close', (code) => {
+        if (!resolved && code !== 0) reject(new Error('yt-dlp early exit'));
+      });
+      setTimeout(() => {
+        resolved = true;
+        resolve();
+      }, 1000);
+    });
+
+  } catch (e: any) {
+    console.error('[mp3 download error, trying Cobalt fallback]', e?.message);
+    if (isYoutube) {
+      try {
+        const directUrl = await fetchFromCobalt(url, true);
+        const res = await fetch(directUrl);
+        const headers = new Headers(res.headers);
+        headers.set('Content-Disposition', `attachment; filename="audio.mp3"`);
+        headers.set('Content-Type', 'audio/mpeg');
+        return new NextResponse(res.body, { status: 200, headers });
+      } catch (cobaltErr: any) {
+        console.error('[Cobalt fallback error]', cobaltErr?.message);
+      }
+    }
+    return NextResponse.json({ error: 'فشل في معالجة رابط الصوت.' }, { status: 500, headers: corsHeaders });
+  }
 
   return new NextResponse(stream, {
     headers: {

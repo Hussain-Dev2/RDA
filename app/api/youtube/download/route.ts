@@ -2,13 +2,13 @@
 import { optionsResponse, corsHeaders, DEFAULT_FORMAT_MAP, buildMp4Response, buildMp3Response, qualityToBitrate, getParam, Quality } from '../../_lib/platform';
 import { NextResponse } from 'next/server';
 
-// YouTube-specific: prefer mp4+m4a merge for best compat
+// YouTube-specific: prefer mp4
 const FORMAT_MAP = {
   ...DEFAULT_FORMAT_MAP,
   mp4: {
-    high:   'bestvideo[ext=mp4][height<=1080]+bestaudio[ext=m4a]/bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
-    medium: 'bestvideo[ext=mp4][height<=720]+bestaudio[ext=m4a]/best[height<=720][ext=mp4]/best',
-    low:    'bestvideo[ext=mp4][height<=360]+bestaudio[ext=m4a]/worst[ext=mp4]/worst',
+    high:   'b[ext=mp4][height<=1080]/b[ext=mp4]/b/best',
+    medium: 'b[ext=mp4][height<=720]/b[ext=mp4]/b/best',
+    low:    'b[ext=mp4][height<=360]/w[ext=mp4]/worst',
   },
 };
 
