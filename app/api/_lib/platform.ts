@@ -150,7 +150,6 @@ export async function buildInfoResponse(
 ): Promise<NextResponse> {
   const isYoutube = url.includes('youtube.com') || url.includes('youtu.be');
   const cookiesPath = isYoutube ? getCookiesPath() : null;
-  const authArgs = isYoutube ? ['--username', 'oauth2'] : [];
 
   if (process.env.YT_COOKIES) {
     console.log(`[Cookies] Data found, length: ${process.env.YT_COOKIES.length}`);
@@ -163,7 +162,6 @@ export async function buildInfoResponse(
       '--no-warnings',
       '--no-check-certificates',
       '--force-ipv4',
-      ...authArgs,
       '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       '--extractor-args', 'youtube:player_client=web_creator',
       '--socket-timeout', '15',
@@ -229,7 +227,6 @@ export async function buildMp4Response(
 ): Promise<Response> {
   const isYoutube = url.includes('youtube.com') || url.includes('youtu.be');
   const cookiesPath = isYoutube ? getCookiesPath() : null;
-  const authArgs = isYoutube ? ['--username', 'oauth2'] : [];
 
   try {
     const stdout = await runYtDlp([
@@ -237,7 +234,6 @@ export async function buildMp4Response(
       '--no-warnings',
       '--no-check-certificates',
       '--socket-timeout', '15',
-      ...authArgs,
       '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       '-f', format,
       '-g',
@@ -280,7 +276,6 @@ export function buildMp3Response(
 ): NextResponse {
   const isYoutube = url.includes('youtube.com') || url.includes('youtu.be');
   const cookiesPath = isYoutube ? getCookiesPath() : null;
-  const authArgs = isYoutube ? ['--username', 'oauth2'] : [];
   const useShell = process.platform === 'win32';
 
   const ytArgs = [
@@ -288,7 +283,6 @@ export function buildMp3Response(
     '--no-warnings',
     '--no-check-certificates',
     '--socket-timeout', '15',
-    ...authArgs,
     '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     '-o', '-',
     '-f', format,
