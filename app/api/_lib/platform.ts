@@ -162,6 +162,7 @@ export async function buildInfoResponse(
       '--no-warnings',
       '--no-check-certificates',
       '--force-ipv4',
+      '--format', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
       '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       '--extractor-args', 'youtube:player_client=web_creator',
       '--socket-timeout', '15',
