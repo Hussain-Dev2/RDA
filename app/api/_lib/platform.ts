@@ -81,9 +81,9 @@ export interface FormatMap {
 /** Default format map — platforms can override individual entries */
 export const DEFAULT_FORMAT_MAP: FormatMap = {
   mp4: {
-    high:   'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
-    medium: 'bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best[height<=720][ext=mp4]/best',
-    low:    'worst[ext=mp4]/worst',
+    high:   'b[ext=mp4]/b/best',
+    medium: 'b[height<=720][ext=mp4]/b[ext=mp4]/b/best',
+    low:    'w[ext=mp4]/w/worst',
   },
   mp3: {
     high:   'bestaudio/best',
