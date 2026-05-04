@@ -145,32 +145,51 @@ export function runYtDlp(args: string[], cookiesPath?: string | null): Promise<s
 
 // ── Cobalt API Fallback ───────────────────────────────────────────────────────
 async function fetchFromCobalt(url: string, isAudioOnly: boolean): Promise<string> {
-  const res = await fetch('https://api.cobalt.tools/', { // Updated to root for v10
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    },
-    body: JSON.stringify({
-      url: url,
-      downloadMode: isAudioOnly ? 'audio' : 'video',
-      videoQuality: "720",
-      filenamePattern: "pretty",
-    })
-  });
+  const instances = [
+    "https://api.cobalt.tools/",
+    "https://cobalt.api.unblock.bot/api/json"
+  ];
+  
+  let lastError = null;
 
-  if (!res.ok) {
-    throw new Error(`Cobalt API HTTP error: ${res.status}`);
+  for (const api of instances) {
+    try {
+      const res = await fetch(api, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        },
+        body: JSON.stringify({
+          url: url,
+          videoQuality: "720",
+          downloadMode: isAudioOnly ? 'audio' : 'video',
+          youtubeVideoCodec: "h264",
+          httpProxy: ""
+        })
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        console.error(`[Cobalt Instance Error: ${api}]`, errorData);
+        lastError = new Error(`Cobalt Error (${api}): ${errorData.text || errorData.message || 'Unknown failure'}`);
+        continue;
+      }
+
+      const data = await res.json();
+      if (data.status === 'stream' || data.status === 'redirect' || data.url) {
+        return data.url;
+      }
+      
+      lastError = new Error(`No download link found from ${api}`);
+    } catch (e: any) {
+      console.error(`[Cobalt Instance Exception: ${api}]`, e);
+      lastError = e;
+    }
   }
 
-  const data = await res.json();
-  if (data.status === 'error') {
-    throw new Error(`Cobalt returned error: ${data.text}`);
-  }
-
-  if (data.url) return data.url;
-  throw new Error('Cobalt returned no URL');
+  throw lastError || new Error('All Cobalt instances failed');
 }
 
 // ── Fetch video info ──────────────────────────────────────────────────────────
