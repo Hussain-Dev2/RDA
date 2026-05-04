@@ -3,6 +3,7 @@ import { optionsResponse, corsHeaders, getParam } from '../../_lib/platform';
 import { NextResponse } from 'next/server';
 
 const COBALT_INSTANCES = [
+  "https://cobalt-eg59.onrender.com/api/json", // Your private instance
   "https://api.cobalt.tools/",
   "https://cobalt.hot-as-hell.club/api/json"
 ];

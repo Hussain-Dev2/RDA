@@ -146,6 +146,7 @@ export function runYtDlp(args: string[], cookiesPath?: string | null): Promise<s
 // ── Cobalt API Fallback ───────────────────────────────────────────────────────
 async function fetchFromCobalt(url: string, isAudioOnly: boolean): Promise<string> {
   const instances = [
+    "https://cobalt-eg59.onrender.com/api/json", // Your private instance
     "https://api.cobalt.tools/",
     "https://cobalt.hot-as-hell.club/api/json"
   ];
