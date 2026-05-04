@@ -23,7 +23,26 @@ export async function GET(request: Request) {
     }
   } catch (e) {}
 
-  return buildInfoResponse(cleanUrl, [
+  const ytRes = await buildInfoResponse(cleanUrl, [
     '--referer', 'https://www.youtube.com/',
   ]);
+
+  // Fallback to noembed if yt-dlp info fails
+  if (!ytRes.ok) {
+    try {
+      const noEmbedRes = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(cleanUrl)}`);
+      const noEmbedData = await noEmbedRes.json();
+      if (!noEmbedData.error) {
+        return NextResponse.json({
+          title: noEmbedData.title || 'Unknown Title',
+          thumbnail: noEmbedData.thumbnail_url || '',
+          duration: 0, // noembed doesn't provide duration
+        }, { headers: corsHeaders });
+      }
+    } catch (e) {
+      console.error("[noembed fallback error]", e);
+    }
+  }
+
+  return ytRes;
 }
