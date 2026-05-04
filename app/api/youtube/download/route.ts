@@ -2,15 +2,15 @@
 import { optionsResponse, corsHeaders, getParam } from '../../_lib/platform';
 import { NextResponse } from 'next/server';
 
+const COBALT_INSTANCES = [
+  "https://api.cobalt.tools/",
+  "https://cobalt.hot-as-hell.club/api/json"
+];
+
 async function fetchFromCobalt(url: string, type: 'video' | 'audio') {
-  const instances = [
-    "https://api.cobalt.tools/",
-    "https://cobalt.api.unblock.bot/api/json"
-  ];
-  
   let lastError = null;
 
-  for (const api of instances) {
+  for (const api of COBALT_INSTANCES) {
     try {
       const response = await fetch(api, {
         method: "POST",
@@ -26,6 +26,8 @@ async function fetchFromCobalt(url: string, type: 'video' | 'audio') {
           youtubeVideoCodec: "h264",
           httpProxy: ""
         }),
+        // @ts-ignore
+        signal: AbortSignal.timeout(10000) // 10 seconds timeout
       });
 
       if (!response.ok) {
@@ -40,14 +42,15 @@ async function fetchFromCobalt(url: string, type: 'video' | 'audio') {
         return result.url;
       }
       
-      lastError = new Error(`No download link found in Cobalt response from ${api}. Status: ${result.status}`);
+      lastError = new Error(`No download link found from ${api}. Status: ${result.status}`);
     } catch (e: any) {
-      console.error(`[Cobalt Instance Exception: ${api}]`, e);
+      console.error(`Failed to fetch from ${api}:`, e.message);
       lastError = e;
+      continue;
     }
   }
   
-  throw lastError || new Error("All Cobalt instances failed.");
+  throw lastError || new Error("All Cobalt instances are unreachable.");
 }
 
 export async function OPTIONS() { return optionsResponse(); }

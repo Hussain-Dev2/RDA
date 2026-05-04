@@ -147,7 +147,7 @@ export function runYtDlp(args: string[], cookiesPath?: string | null): Promise<s
 async function fetchFromCobalt(url: string, isAudioOnly: boolean): Promise<string> {
   const instances = [
     "https://api.cobalt.tools/",
-    "https://cobalt.api.unblock.bot/api/json"
+    "https://cobalt.hot-as-hell.club/api/json"
   ];
   
   let lastError = null;
@@ -167,12 +167,14 @@ async function fetchFromCobalt(url: string, isAudioOnly: boolean): Promise<strin
           downloadMode: isAudioOnly ? 'audio' : 'video',
           youtubeVideoCodec: "h264",
           httpProxy: ""
-        })
+        }),
+        // @ts-ignore
+        signal: AbortSignal.timeout(10000) // 10 seconds timeout
       });
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
-        console.error(`[Cobalt Instance Error: ${api}]`, errorData);
+        console.error(`Failed to fetch from ${api}:`, errorData);
         lastError = new Error(`Cobalt Error (${api}): ${errorData.text || errorData.message || 'Unknown failure'}`);
         continue;
       }
@@ -184,12 +186,13 @@ async function fetchFromCobalt(url: string, isAudioOnly: boolean): Promise<strin
       
       lastError = new Error(`No download link found from ${api}`);
     } catch (e: any) {
-      console.error(`[Cobalt Instance Exception: ${api}]`, e);
+      console.error(`Failed to fetch from ${api}:`, e.message);
       lastError = e;
+      continue;
     }
   }
 
-  throw lastError || new Error('All Cobalt instances failed');
+  throw lastError || new Error('All Cobalt instances are unreachable.');
 }
 
 // ── Fetch video info ──────────────────────────────────────────────────────────
