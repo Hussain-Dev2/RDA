@@ -145,7 +145,7 @@ export function runYtDlp(args: string[], cookiesPath?: string | null): Promise<s
 
 // ── Cobalt API Fallback ───────────────────────────────────────────────────────
 async function fetchFromCobalt(url: string, isAudioOnly: boolean): Promise<string> {
-  const res = await fetch('https://api.cobalt.tools/api/json', {
+  const res = await fetch('https://api.cobalt.tools/', { // Updated to root for v10
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -154,11 +154,9 @@ async function fetchFromCobalt(url: string, isAudioOnly: boolean): Promise<strin
     },
     body: JSON.stringify({
       url: url,
-      vCodec: "h264",
-      vQuality: "720",
-      aFormat: "mp3",
-      isAudioOnly: isAudioOnly,
-      isNoTTWatermark: true,
+      downloadMode: isAudioOnly ? 'audio' : 'video',
+      videoQuality: "720",
+      filenamePattern: "pretty",
     })
   });
 

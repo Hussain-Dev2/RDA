@@ -3,7 +3,7 @@ import { optionsResponse, corsHeaders, getParam } from '../../_lib/platform';
 import { NextResponse } from 'next/server';
 
 async function fetchFromCobalt(url: string, type: 'video' | 'audio') {
-  const COBALT_API = "https://api.cobalt.tools/api/json";
+  const COBALT_API = "https://api.cobalt.tools/"; // Updated for Cobalt v10
   
   const response = await fetch(COBALT_API, {
     method: "POST",
@@ -16,7 +16,7 @@ async function fetchFromCobalt(url: string, type: 'video' | 'audio') {
       url: url,
       downloadMode: type === 'audio' ? 'audio' : 'video',
       videoQuality: "720", // Balanced quality for faster response
-      filenamePattern: "basic"
+      filenamePattern: "pretty" // Updated per user plan
     }),
   });
 
