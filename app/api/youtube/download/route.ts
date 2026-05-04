@@ -10,6 +10,7 @@ async function fetchFromCobalt(url: string, type: 'video' | 'audio') {
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     },
     body: JSON.stringify({
       url: url,
@@ -21,16 +22,21 @@ async function fetchFromCobalt(url: string, type: 'video' | 'audio') {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(`Cobalt Error: ${errorData.text || 'Unknown failure'}`);
+    console.error("[Cobalt API Error Details]", errorData);
+    throw new Error(`Cobalt Error: ${errorData.text || errorData.message || 'Unknown failure'}`);
   }
 
   const result = await response.json();
+  console.log("[Cobalt API Response Status]", result.status);
+
   // Cobalt returns { status: 'stream', url: '...' } or { status: 'redirect', url: '...' }
   if (result.status === 'stream' || result.status === 'redirect') {
     return result.url;
   }
   
-  throw new Error("No download link found in Cobalt response.");
+  if (result.url) return result.url; // Fallback for other status types that still provide a URL
+
+  throw new Error(`No download link found in Cobalt response. Status: ${result.status}`);
 }
 
 export async function OPTIONS() { return optionsResponse(); }
@@ -57,11 +63,17 @@ export async function GET(request: Request) {
     const cobaltMode = type === 'mp3' ? 'audio' : 'video';
     const streamUrl = await fetchFromCobalt(cleanUrl, cobaltMode);
 
-    // Option 1: Redirect (saves server bandwidth)
-    // return NextResponse.redirect(streamUrl);
-
     // Option 2: Proxy Stream (keeps user on domain, sets filename)
-    const res = await fetch(streamUrl);
+    const res = await fetch(streamUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      }
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch stream from Cobalt: ${res.status} ${res.statusText}`);
+    }
+
     const headers = new Headers(res.headers);
     const safeName = type === 'mp3' ? 'audio.mp3' : 'video.mp4';
     headers.set('Content-Disposition', `attachment; filename="${safeName}"`);
@@ -70,6 +82,10 @@ export async function GET(request: Request) {
     return new Response(res.body, { status: 200, headers });
   } catch (error: any) {
     console.error("Cobalt Fallback Failed:", error);
-    return NextResponse.json({ error: 'فشل في معالجة طلب التحميل (Cobalt Fallback Failed)' }, { status: 500, headers: corsHeaders });
+    return NextResponse.json({ 
+      error: 'فشل في معالجة طلب التحميل',
+      details: error.message || 'Unknown Error',
+      cobalt_error: true
+    }, { status: 500, headers: corsHeaders });
   }
 }
