@@ -64,7 +64,15 @@ export const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Expose-Headers': 'Content-Disposition, Content-Type',
 };
+
+export function addCorsToHeaders(headers: Headers): Headers {
+  for (const [key, value] of Object.entries(corsHeaders)) {
+    headers.set(key, value);
+  }
+  return headers;
+}
 
 export function optionsResponse() {
   return NextResponse.json({}, { headers: corsHeaders });
@@ -287,8 +295,10 @@ export async function buildMp4Response(
       '--no-playlist',
       '--no-warnings',
       '--no-check-certificates',
+      '--force-ipv4',
       '--socket-timeout', '15',
       '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      '--extractor-args', 'youtube:player_client=web_creator',
       '-f', format,
       '-g',
       ...extraArgs,
@@ -300,7 +310,7 @@ export async function buildMp4Response(
 
     // Proxy the stream to set proper attachment headers
     const res = await fetch(directUrl);
-    const headers = new Headers(res.headers);
+    const headers = addCorsToHeaders(new Headers(res.headers));
     
     const safeName = filename ? filename.replace(/[^\w\s.-]/g, '') : 'video.mp4';
     headers.set('Content-Disposition', `attachment; filename="${safeName}"`);
@@ -316,7 +326,7 @@ export async function buildMp4Response(
       try {
         const directUrl = await fetchFromCobalt(url, false);
         const res = await fetch(directUrl);
-        const headers = new Headers(res.headers);
+        const headers = addCorsToHeaders(new Headers(res.headers));
         const safeName = filename ? filename.replace(/[^\w\s.-]/g, '') : 'video.mp4';
         headers.set('Content-Disposition', `attachment; filename="${safeName}"`);
         headers.set('Content-Type', 'video/mp4');
@@ -349,8 +359,10 @@ export async function buildMp3Response(
     '--no-playlist',
     '--no-warnings',
     '--no-check-certificates',
+    '--force-ipv4',
     '--socket-timeout', '15',
     '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    '--extractor-args', 'youtube:player_client=web_creator',
     '-o', '-',
     '-f', format,
     ...extraArgs,
@@ -420,7 +432,7 @@ export async function buildMp3Response(
       try {
         const directUrl = await fetchFromCobalt(url, true);
         const res = await fetch(directUrl);
-        const headers = new Headers(res.headers);
+        const headers = addCorsToHeaders(new Headers(res.headers));
         headers.set('Content-Disposition', `attachment; filename="audio.mp3"`);
         headers.set('Content-Type', 'audio/mpeg');
         return new NextResponse(res.body, { status: 200, headers });
