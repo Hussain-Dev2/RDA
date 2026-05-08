@@ -362,11 +362,14 @@ export async function buildMp4Response(
         const stream = new ReadableStream({
           start(controller) {
             ytdlp.stdout.on('data', (chunk) => controller.enqueue(chunk));
-            ytdlp.stdout.on('end', () => { ytStreamEnded = true; controller.close(); });
+            ytdlp.stdout.on('end', () => { ytStreamEnded = true; });
             ytdlp.stdout.on('error', (e) => controller.error(e));
             ytdlp.on('close', (code) => {
-              if (code !== 0 && !ytStreamEnded) {
-                try { controller.error(new Error(`yt-dlp pipe exited with code ${code}`)); } catch (_) {}
+              if (code !== 0) {
+                try { controller.error(new Error(`yt-dlp pipe failed (code ${code})`)); } catch (_) {}
+              } else {
+                if (!ytStreamEnded) ytdlp.stdout.destroy();
+                controller.close();
               }
             });
           },
