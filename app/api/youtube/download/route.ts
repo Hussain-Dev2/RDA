@@ -23,6 +23,9 @@ export async function GET(request: Request) {
     if (parsed.hostname.includes('youtube.com')) {
       const v = parsed.searchParams.get('v');
       if (v) cleanUrl = `https://www.youtube.com/watch?v=${v}`;
+    } else if (parsed.hostname.includes('youtu.be')) {
+      const id = parsed.pathname.slice(1).split('/')[0];
+      if (id) cleanUrl = `https://youtu.be/${id}`;
     }
   } catch (e) {}
 

@@ -321,8 +321,50 @@ export async function buildMp4Response(
       headers
     });
   } catch (err: any) {
-    console.error('[mp4 download error, trying Cobalt fallback]', err?.message);
+    console.error('[mp4 download -g failed, trying pipe mode]', err?.message);
+    // Fallback: pipe video through yt-dlp stdout (no cookies needed)
     if (isYoutube) {
+      try {
+        const safeName = filename ? filename.replace(/[^\w\s.-]/g, '') : 'video.mp4';
+        const useShell = process.platform === 'win32';
+        const pipeArgs = [
+          '--no-playlist',
+          '--no-warnings',
+          '--no-check-certificates',
+          '--force-ipv4',
+          '--socket-timeout', '15',
+          '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          '--extractor-args', 'youtube:player_client=web_creator',
+          '-f', format,
+          '-o', '-',
+          ...extraArgs,
+          url,
+        ];
+        if (cookiesPath) pipeArgs.unshift('--cookies', cookiesPath);
+        const ytdlp = spawn(YT_DLP, pipeArgs, { shell: useShell });
+
+        const headers = new Headers();
+        addCorsToHeaders(headers);
+        headers.set('Content-Disposition', `attachment; filename="${safeName}"`);
+        headers.set('Content-Type', 'video/mp4');
+
+        const stream = new ReadableStream({
+          start(controller) {
+            ytdlp.stdout.on('data', (chunk) => controller.enqueue(chunk));
+            ytdlp.stdout.on('end', () => controller.close());
+            ytdlp.stdout.on('error', (err) => controller.error(err));
+            ytdlp.on('close', (code) => {
+              if (code !== 0 && ytdlp.stdout.readableEnded === false) {
+                controller.error(new Error(`yt-dlp pipe exited with code ${code}`));
+              }
+            });
+          },
+          cancel() { ytdlp.kill(); },
+        });
+        return new Response(stream, { status: 200, headers });
+      } catch (pipeErr: any) {
+        console.error('[mp4 pipe mode failed, trying Cobalt]', pipeErr?.message);
+      }
       try {
         const directUrl = await fetchFromCobalt(url, false);
         const res = await fetch(directUrl);
