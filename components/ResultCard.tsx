@@ -1,6 +1,6 @@
 "use client";
 
-import { Music, Video, Loader2, Check, Download } from "lucide-react";
+import { Music, Video, Loader2, Check, Download, AlertCircle } from "lucide-react";
 import { useState } from "react";
 
 export interface VideoInfo {
@@ -21,6 +21,7 @@ export default function ResultCard({ info, url, accentColor = "#3b82f6", siteId 
   const [quality, setQuality] = useState<"high" | "medium" | "low">("high");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+  const [dlError, setDlError] = useState<string | null>(null);
 
   const formatDuration = (seconds: number) => {
     const h = Math.floor(seconds / 3600);
@@ -30,30 +31,40 @@ export default function ResultCard({ info, url, accentColor = "#3b82f6", siteId 
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     setLoading(true);
     setDone(false);
+    setDlError(null);
 
-    // Allow pointing to a remote backend (e.g. Render) via environment variable
     const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
     const downloadUrl = `${apiBase}/api/${siteId}/download?type=${format}&quality=${quality}&url=${encodeURIComponent(url)}`;
 
-    // Create a clean filename
-    const cleanTitle = info.title.replace(/[^\w\s-]/g, '').substring(0, 50).trim();
-    const fileName = `${cleanTitle}.${format}`;
+    try {
+      const res = await fetch(downloadUrl);
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'فشل التحميل');
+      }
 
-    // Force download using hidden link
-    const a = document.createElement("a");
-    a.href = downloadUrl;
-    a.download = fileName;
-    // For cross-origin requests, we add target="_blank" as a fallback
-    a.target = "_blank"; 
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const cleanTitle = info.title.replace(/[^\w\s-]/g, '').substring(0, 50).trim();
+      const fileName = `${cleanTitle || 'download'}.${format}`;
 
-    setTimeout(() => { setLoading(false); setDone(true); }, 3000);
-    setTimeout(() => setDone(false), 6000);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+
+      setDone(true);
+    } catch (err: any) {
+      setDlError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const qualityOptions = [
@@ -167,6 +178,14 @@ export default function ResultCard({ info, url, accentColor = "#3b82f6", siteId 
               <><Download className="w-5 h-5" /> ابدأ التحميل</>
             )}
           </button>
+
+          {/* Download error */}
+          {dlError && (
+            <div className="flex items-start gap-2 text-red-400 bg-red-500/8 border border-red-500/15 px-4 py-3 rounded-xl">
+              <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+              <p className="text-xs">{dlError}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
