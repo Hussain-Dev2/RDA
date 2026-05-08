@@ -343,8 +343,17 @@ export async function buildMp4Response(
         ];
         if (cookiesPath) pipeArgs.unshift('--cookies', cookiesPath);
         const ytdlp = spawn(YT_DLP, pipeArgs, { shell: useShell });
-        let ytStreamEnded = false;
 
+        // Probe: wait 1s for early yt-dlp failure before sending 200
+        await new Promise<void>((resolve, reject) => {
+          let probed = false;
+          ytdlp.on('close', (code) => {
+            if (!probed && code !== 0) reject(new Error(`yt-dlp pipe early exit (code ${code})`));
+          });
+          setTimeout(() => { probed = true; resolve(); }, 1000);
+        });
+
+        let ytStreamEnded = false;
         const headers = new Headers();
         addCorsToHeaders(headers);
         headers.set('Content-Disposition', `attachment; filename="${safeName}"`);
