@@ -1,8 +1,0 @@
-C:\Users\huiq9\OneDrive\Desktop\rda\AGENTS.md
-C:\Users\huiq9\OneDrive\Desktop\rda\CLAUDE.md
-C:\Users\huiq9\OneDrive\Desktop\rda\README.md
-C:\Users\huiq9\OneDrive\Desktop\rda\public\file.svg
-C:\Users\huiq9\OneDrive\Desktop\rda\public\globe.svg
-C:\Users\huiq9\OneDrive\Desktop\rda\public\next.svg
-C:\Users\huiq9\OneDrive\Desktop\rda\public\vercel.svg
-C:\Users\huiq9\OneDrive\Desktop\rda\public\window.svg
