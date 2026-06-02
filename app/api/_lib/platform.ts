@@ -89,9 +89,9 @@ export interface FormatMap {
 /** Default format map — platforms can override individual entries */
 export const DEFAULT_FORMAT_MAP: FormatMap = {
   mp4: {
-    high:   'b[ext=mp4]/b/best',
-    medium: 'b[height<=720][ext=mp4]/b[ext=mp4]/b/best',
-    low:    'w[ext=mp4]/w/worst',
+    high:   'bestvideo[height<=1080]+bestaudio/best/best',
+    medium: 'bestvideo[height<=720]+bestaudio/best/best',
+    low:    'bestvideo[height<=360]+bestaudio/best/best',
   },
   mp3: {
     high:   'bestaudio/best',
@@ -289,6 +289,106 @@ export async function buildMp4Response(
 ): Promise<Response> {
   const isYoutube = url.includes('youtube.com') || url.includes('youtu.be');
   const cookiesPath = isYoutube ? getCookiesPath() : null;
+
+  if (isYoutube) {
+    try {
+      const tempDir = os.tmpdir();
+      const baseName = `yt_download_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+      const outTemplate = path.join(tempDir, `${baseName}.%(ext)s`);
+      const finalMp4Path = path.join(tempDir, `${baseName}.mp4`);
+      
+      const dlArgs = [
+        '--no-playlist',
+        '--no-warnings',
+        '--no-check-certificates',
+        '--force-ipv4',
+        '--socket-timeout', '30',
+        '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        '--extractor-args', 'youtube:player_client=web_creator',
+        '-f', format,
+        '--merge-output-format', 'mp4',
+        '-o', outTemplate,
+        ...extraArgs,
+        url,
+      ];
+      
+      if (cookiesPath) {
+        dlArgs.unshift('--cookies', cookiesPath);
+      }
+
+      console.log(`[youtube-download] Merging video+audio to temp file: ${finalMp4Path}`);
+      
+      const useShell = process.platform === 'win32';
+      const ytdlp = spawn(YT_DLP, dlArgs, { shell: useShell });
+
+      await new Promise<void>((resolve, reject) => {
+        let stderr = '';
+        ytdlp.stderr.on('data', (d) => { stderr += d.toString(); });
+        ytdlp.on('close', (code) => {
+          if (code !== 0) {
+            reject(new Error(stderr || `yt-dlp exited with code ${code}`));
+          } else {
+            resolve();
+          }
+        });
+        ytdlp.on('error', (err) => reject(err));
+      });
+
+      if (!fs.existsSync(finalMp4Path)) {
+        throw new Error('Downloaded file not found or failed to merge into MP4 format.');
+      }
+
+      const fileStats = fs.statSync(finalMp4Path);
+      console.log(`[youtube-download] Success! Temp file size: ${fileStats.size} bytes`);
+
+      const safeName = filename ? filename.replace(/[^\w\s.-]/g, '') : 'video.mp4';
+      const headers = new Headers();
+      addCorsToHeaders(headers);
+      headers.set('Content-Disposition', `attachment; filename="${safeName}"`);
+      headers.set('Content-Type', 'video/mp4');
+      headers.set('Content-Length', fileStats.size.toString());
+
+      const stream = new ReadableStream({
+        start(controller) {
+          const fileStream = fs.createReadStream(finalMp4Path);
+          fileStream.on('data', (chunk) => controller.enqueue(chunk));
+          fileStream.on('end', () => {
+            controller.close();
+            try { fs.unlinkSync(finalMp4Path); } catch (e) {}
+          });
+          fileStream.on('error', (err) => {
+            controller.error(err);
+            try { fs.unlinkSync(finalMp4Path); } catch (e) {}
+          });
+        },
+        cancel() {
+          try { fs.unlinkSync(finalMp4Path); } catch (e) {}
+        }
+      });
+
+      return new Response(stream, { status: 200, headers });
+
+    } catch (dlErr: any) {
+      console.error('[youtube-download] Temp-file download failed, trying Cobalt fallback:', dlErr?.message);
+      try {
+        const directUrl = await fetchFromCobalt(url, false);
+        const res = await fetch(directUrl);
+        const headers = addCorsToHeaders(new Headers(res.headers));
+        const safeName = filename ? filename.replace(/[^\w\s.-]/g, '') : 'video.mp4';
+        headers.set('Content-Disposition', `attachment; filename="${safeName}"`);
+        headers.set('Content-Type', 'video/mp4');
+        return new Response(res.body, { status: 200, headers });
+      } catch (cobaltErr: any) {
+        console.error('[youtube-download] Cobalt fallback also failed:', cobaltErr?.message);
+        return NextResponse.json(
+          { error: 'فشل في تحميل الفيديو بعد عدة محاولات.', detail: dlErr?.message },
+          { status: 500, headers: corsHeaders }
+        ) as any;
+      }
+    } finally {
+      cleanupCookies(cookiesPath);
+    }
+  }
 
   try {
     const stdout = await runYtDlp([
