@@ -1,0 +1,2188 @@
+{
+  "nodes": [
+    {
+      "id": "eslint_config_mjs",
+      "label": "eslint.config.mjs",
+      "file_type": "code",
+      "source_file": "eslint.config.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "next_env_d_ts",
+      "label": "next-env.d.ts",
+      "file_type": "code",
+      "source_file": "next-env.d.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "next_config_ts",
+      "label": "next.config.ts",
+      "file_type": "code",
+      "source_file": "next.config.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "postcss_config_mjs",
+      "label": "postcss.config.mjs",
+      "file_type": "code",
+      "source_file": "postcss.config.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_layout_tsx",
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "app\\layout.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_layout_rootlayout",
+      "label": "RootLayout()",
+      "file_type": "code",
+      "source_file": "app\\layout.tsx",
+      "source_location": "L20"
+    },
+    {
+      "id": "app_page_tsx",
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "app\\page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_page_handlesiteselect",
+      "label": "handleSiteSelect()",
+      "file_type": "code",
+      "source_file": "app\\page.tsx",
+      "source_location": "L147"
+    },
+    {
+      "id": "app_page_handlecopy",
+      "label": "handleCopy()",
+      "file_type": "code",
+      "source_file": "app\\page.tsx",
+      "source_location": "L156"
+    },
+    {
+      "id": "app_page_handlesearch",
+      "label": "handleSearch()",
+      "file_type": "code",
+      "source_file": "app\\page.tsx",
+      "source_location": "L165"
+    },
+    {
+      "id": "app_api_dailymotion_download_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\dailymotion\\download\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "download_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\dailymotion\\download\\route.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "download_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\dailymotion\\download\\route.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "app_api_dailymotion_info_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\dailymotion\\info\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "info_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\dailymotion\\info\\route.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "info_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\dailymotion\\info\\route.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "app_api_facebook_download_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\facebook\\download\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "download_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\facebook\\download\\route.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "download_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\facebook\\download\\route.ts",
+      "source_location": "L22"
+    },
+    {
+      "id": "app_api_facebook_info_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\facebook\\info\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "info_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\facebook\\info\\route.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "info_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\facebook\\info\\route.ts",
+      "source_location": "L9"
+    },
+    {
+      "id": "app_api_instagram_download_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\instagram\\download\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "download_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\instagram\\download\\route.ts",
+      "source_location": "L23"
+    },
+    {
+      "id": "download_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\instagram\\download\\route.ts",
+      "source_location": "L25"
+    },
+    {
+      "id": "app_api_instagram_info_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\instagram\\info\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "info_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\instagram\\info\\route.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "info_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\instagram\\info\\route.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "app_api_reddit_download_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\reddit\\download\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "download_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\reddit\\download\\route.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "download_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\reddit\\download\\route.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "app_api_reddit_info_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\reddit\\info\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "info_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\reddit\\info\\route.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "info_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\reddit\\info\\route.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "app_api_soundcloud_download_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\soundcloud\\download\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "download_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\soundcloud\\download\\route.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "download_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\soundcloud\\download\\route.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "app_api_soundcloud_info_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\soundcloud\\info\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "info_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\soundcloud\\info\\route.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "info_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\soundcloud\\info\\route.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "app_api_tiktok_download_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\tiktok\\download\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "download_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\tiktok\\download\\route.ts",
+      "source_location": "L24"
+    },
+    {
+      "id": "download_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\tiktok\\download\\route.ts",
+      "source_location": "L26"
+    },
+    {
+      "id": "app_api_tiktok_info_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\tiktok\\info\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "info_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\tiktok\\info\\route.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "info_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\tiktok\\info\\route.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "app_api_twitch_download_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\twitch\\download\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "download_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\twitch\\download\\route.ts",
+      "source_location": "L19"
+    },
+    {
+      "id": "download_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\twitch\\download\\route.ts",
+      "source_location": "L21"
+    },
+    {
+      "id": "app_api_twitch_info_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\twitch\\info\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "info_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\twitch\\info\\route.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "info_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\twitch\\info\\route.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "app_api_twitter_download_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\twitter\\download\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "download_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\twitter\\download\\route.ts",
+      "source_location": "L21"
+    },
+    {
+      "id": "download_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\twitter\\download\\route.ts",
+      "source_location": "L23"
+    },
+    {
+      "id": "app_api_twitter_info_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\twitter\\info\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "info_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\twitter\\info\\route.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "info_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\twitter\\info\\route.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "app_api_vimeo_download_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\vimeo\\download\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "download_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\vimeo\\download\\route.ts",
+      "source_location": "L21"
+    },
+    {
+      "id": "download_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\vimeo\\download\\route.ts",
+      "source_location": "L23"
+    },
+    {
+      "id": "app_api_vimeo_info_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\vimeo\\info\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "info_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\vimeo\\info\\route.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "info_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\vimeo\\info\\route.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "app_api_youtube_download_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\youtube\\download\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "download_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\youtube\\download\\route.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "download_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\youtube\\download\\route.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "app_api_youtube_info_route_ts",
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\youtube\\info\\route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "info_route_options",
+      "label": "OPTIONS()",
+      "file_type": "code",
+      "source_file": "app\\api\\youtube\\info\\route.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "info_route_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\youtube\\info\\route.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "app_api_lib_platform_ts",
+      "label": "platform.ts",
+      "file_type": "code",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_platform_getcookiespath",
+      "label": "getCookiesPath()",
+      "file_type": "code",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L14"
+    },
+    {
+      "id": "lib_platform_cleanupcookies",
+      "label": "cleanupCookies()",
+      "file_type": "code",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L52"
+    },
+    {
+      "id": "lib_platform_addcorstoheaders",
+      "label": "addCorsToHeaders()",
+      "file_type": "code",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L70"
+    },
+    {
+      "id": "lib_platform_optionsresponse",
+      "label": "optionsResponse()",
+      "file_type": "code",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L77"
+    },
+    {
+      "id": "lib_platform_runytdlp",
+      "label": "runYtDlp()",
+      "file_type": "code",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L108"
+    },
+    {
+      "id": "lib_platform_fetchfromcobalt",
+      "label": "fetchFromCobalt()",
+      "file_type": "code",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L155"
+    },
+    {
+      "id": "lib_platform_buildinforesponse",
+      "label": "buildInfoResponse()",
+      "file_type": "code",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L208"
+    },
+    {
+      "id": "lib_platform_buildmp4response",
+      "label": "buildMp4Response()",
+      "file_type": "code",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L284"
+    },
+    {
+      "id": "lib_platform_buildmp3response",
+      "label": "buildMp3Response()",
+      "file_type": "code",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L509"
+    },
+    {
+      "id": "lib_platform_qualitytobitrate",
+      "label": "qualityToBitrate()",
+      "file_type": "code",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L617"
+    },
+    {
+      "id": "lib_platform_getparam",
+      "label": "getParam()",
+      "file_type": "code",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L622"
+    },
+    {
+      "id": "components_resultcard_tsx",
+      "label": "ResultCard.tsx",
+      "file_type": "code",
+      "source_file": "components\\ResultCard.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "components_resultcard_formatduration",
+      "label": "formatDuration()",
+      "file_type": "code",
+      "source_file": "components\\ResultCard.tsx",
+      "source_location": "L26"
+    },
+    {
+      "id": "components_resultcard_handledownload",
+      "label": "handleDownload()",
+      "file_type": "code",
+      "source_file": "components\\ResultCard.tsx",
+      "source_location": "L34"
+    },
+    {
+      "id": "agents_doc",
+      "label": "AGENTS.md - Next.js Agent Rules",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "agents_nextjs_rules",
+      "label": "Next.js Agent Rules",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": 2,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Next.js has breaking changes \u00e2\u20ac\u201d APIs, conventions, and file structure differ from model training data. Rules exist to prevent agents from writing code based on outdated knowledge."
+    },
+    {
+      "id": "agents_node_modules_docs",
+      "label": "node_modules/next/dist/docs/",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": 4,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "claude_doc",
+      "label": "CLAUDE.md - Claude Configuration",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_doc",
+      "label": "README.md - Project README",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_nextjs_framework",
+      "label": "Next.js Framework",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": 1,
+      "source_url": "https://nextjs.org",
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_create_next_app",
+      "label": "create-next-app",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": 1,
+      "source_url": "https://nextjs.org/docs/app/api-reference/cli/create-next-app",
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_next_font",
+      "label": "next/font",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": 11,
+      "source_url": "https://nextjs.org/docs/app/building-your-application/optimizing/fonts",
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_geist_font",
+      "label": "Geist Font",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": 11,
+      "source_url": "https://vercel.com/font",
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_vercel_platform",
+      "label": "Vercel Platform",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": 18,
+      "source_url": "https://vercel.com",
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_rda",
+      "label": "RDA Project",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": 25,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "file_icon",
+      "label": "Document/File Icon",
+      "file_type": "image",
+      "source_file": "public/file.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "SVG icon depicting a document page with a folded corner, used in UI to represent file documents."
+    },
+    {
+      "id": "globe_icon",
+      "label": "Globe/World Icon",
+      "file_type": "image",
+      "source_file": "public/globe.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "SVG icon depicting a globe with latitude/longitude grid lines, used to represent global/international features."
+    },
+    {
+      "id": "next_icon",
+      "label": "Next.js Wordmark Logo",
+      "file_type": "image",
+      "source_file": "public/next.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "SVG wordmark logo of the Next.js framework with stylized text 'Next.js'."
+    },
+    {
+      "id": "vercel_icon",
+      "label": "Vercel Logo (triangle/chevron)",
+      "file_type": "image",
+      "source_file": "public/vercel.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "SVG logo of Vercel depicted as a white filled triangle/chevron shape on transparent background."
+    },
+    {
+      "id": "window_icon",
+      "label": "Window UI Icon",
+      "file_type": "image",
+      "source_file": "public/window.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "SVG icon depicting a desktop window with title bar and three control dots (minimize, maximize, close), used in UI for window/layout features."
+    }
+  ],
+  "edges": [
+    {
+      "source": "eslint_config_mjs",
+      "target": "config",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "eslint.config.mjs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "eslint_config_mjs",
+      "target": "core_web_vitals",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "eslint.config.mjs",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "eslint_config_mjs",
+      "target": "typescript",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "eslint.config.mjs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "next_env_d_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_next_types_routes_d_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "next-env.d.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "next_config_ts",
+      "target": "next",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "next.config.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "app_layout_tsx",
+      "target": "next",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\layout.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "app_layout_tsx",
+      "target": "google",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\layout.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "app_layout_tsx",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_globals_css",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\layout.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_layout_tsx",
+      "target": "app_layout_rootlayout",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\layout.tsx",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "app_page_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\page.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_page_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\page.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_page_tsx",
+      "target": "c_users_huiq9_onedrive_desktop_rda_components_resultcard",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\page.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "app_page_tsx",
+      "target": "app_page_handlesiteselect",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\page.tsx",
+      "source_location": "L147",
+      "weight": 1.0
+    },
+    {
+      "source": "app_page_tsx",
+      "target": "app_page_handlecopy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\page.tsx",
+      "source_location": "L156",
+      "weight": 1.0
+    },
+    {
+      "source": "app_page_tsx",
+      "target": "app_page_handlesearch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\page.tsx",
+      "source_location": "L165",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_dailymotion_download_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\dailymotion\\download\\route.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_dailymotion_download_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\dailymotion\\download\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_dailymotion_download_route_ts",
+      "target": "download_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\dailymotion\\download\\route.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_dailymotion_download_route_ts",
+      "target": "download_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\dailymotion\\download\\route.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_dailymotion_info_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\dailymotion\\info\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_dailymotion_info_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\dailymotion\\info\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_dailymotion_info_route_ts",
+      "target": "info_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\dailymotion\\info\\route.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_dailymotion_info_route_ts",
+      "target": "info_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\dailymotion\\info\\route.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_facebook_download_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\facebook\\download\\route.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_facebook_download_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\facebook\\download\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_facebook_download_route_ts",
+      "target": "download_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\facebook\\download\\route.ts",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_facebook_download_route_ts",
+      "target": "download_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\facebook\\download\\route.ts",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_facebook_info_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\facebook\\info\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_facebook_info_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\facebook\\info\\route.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_facebook_info_route_ts",
+      "target": "info_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\facebook\\info\\route.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_facebook_info_route_ts",
+      "target": "info_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\facebook\\info\\route.ts",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_instagram_download_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\instagram\\download\\route.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_instagram_download_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\instagram\\download\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_instagram_download_route_ts",
+      "target": "download_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\instagram\\download\\route.ts",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_instagram_download_route_ts",
+      "target": "download_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\instagram\\download\\route.ts",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_instagram_info_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\instagram\\info\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_instagram_info_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\instagram\\info\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_instagram_info_route_ts",
+      "target": "info_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\instagram\\info\\route.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_instagram_info_route_ts",
+      "target": "info_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\instagram\\info\\route.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_reddit_download_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\reddit\\download\\route.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_reddit_download_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\reddit\\download\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_reddit_download_route_ts",
+      "target": "download_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\reddit\\download\\route.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_reddit_download_route_ts",
+      "target": "download_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\reddit\\download\\route.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_reddit_info_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\reddit\\info\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_reddit_info_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\reddit\\info\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_reddit_info_route_ts",
+      "target": "info_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\reddit\\info\\route.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_reddit_info_route_ts",
+      "target": "info_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\reddit\\info\\route.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_soundcloud_download_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\soundcloud\\download\\route.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_soundcloud_download_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\soundcloud\\download\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_soundcloud_download_route_ts",
+      "target": "download_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\soundcloud\\download\\route.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_soundcloud_download_route_ts",
+      "target": "download_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\soundcloud\\download\\route.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_soundcloud_info_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\soundcloud\\info\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_soundcloud_info_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\soundcloud\\info\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_soundcloud_info_route_ts",
+      "target": "info_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\soundcloud\\info\\route.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_soundcloud_info_route_ts",
+      "target": "info_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\soundcloud\\info\\route.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_tiktok_download_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\tiktok\\download\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_tiktok_download_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\tiktok\\download\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_tiktok_download_route_ts",
+      "target": "download_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\tiktok\\download\\route.ts",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_tiktok_download_route_ts",
+      "target": "download_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\tiktok\\download\\route.ts",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_tiktok_info_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\tiktok\\info\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_tiktok_info_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\tiktok\\info\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_tiktok_info_route_ts",
+      "target": "info_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\tiktok\\info\\route.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_tiktok_info_route_ts",
+      "target": "info_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\tiktok\\info\\route.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitch_download_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitch\\download\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitch_download_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitch\\download\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitch_download_route_ts",
+      "target": "download_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitch\\download\\route.ts",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitch_download_route_ts",
+      "target": "download_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitch\\download\\route.ts",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitch_info_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitch\\info\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitch_info_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitch\\info\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitch_info_route_ts",
+      "target": "info_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitch\\info\\route.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitch_info_route_ts",
+      "target": "info_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitch\\info\\route.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitter_download_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitter\\download\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitter_download_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitter\\download\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitter_download_route_ts",
+      "target": "download_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitter\\download\\route.ts",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitter_download_route_ts",
+      "target": "download_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitter\\download\\route.ts",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitter_info_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitter\\info\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitter_info_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitter\\info\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitter_info_route_ts",
+      "target": "info_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitter\\info\\route.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_twitter_info_route_ts",
+      "target": "info_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\twitter\\info\\route.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_vimeo_download_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\vimeo\\download\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_vimeo_download_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\vimeo\\download\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_vimeo_download_route_ts",
+      "target": "download_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\vimeo\\download\\route.ts",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_vimeo_download_route_ts",
+      "target": "download_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\vimeo\\download\\route.ts",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_vimeo_info_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\vimeo\\info\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_vimeo_info_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\vimeo\\info\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_vimeo_info_route_ts",
+      "target": "info_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\vimeo\\info\\route.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_vimeo_info_route_ts",
+      "target": "info_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\vimeo\\info\\route.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_youtube_download_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\youtube\\download\\route.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_youtube_download_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\youtube\\download\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_youtube_download_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\youtube\\download\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_youtube_download_route_ts",
+      "target": "download_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\youtube\\download\\route.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_youtube_download_route_ts",
+      "target": "download_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\youtube\\download\\route.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_youtube_info_route_ts",
+      "target": "c_users_huiq9_onedrive_desktop_rda_app_api_lib_platform",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\youtube\\info\\route.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_youtube_info_route_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\youtube\\info\\route.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_youtube_info_route_ts",
+      "target": "info_route_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\youtube\\info\\route.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_youtube_info_route_ts",
+      "target": "info_route_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\youtube\\info\\route.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "child_process",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "server",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "os",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "lib_platform_getcookiespath",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "lib_platform_cleanupcookies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "lib_platform_addcorstoheaders",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "lib_platform_optionsresponse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "lib_platform_runytdlp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "lib_platform_fetchfromcobalt",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "lib_platform_buildinforesponse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L208",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "lib_platform_buildmp4response",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L284",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "lib_platform_buildmp3response",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L509",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "lib_platform_qualitytobitrate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L617",
+      "weight": 1.0
+    },
+    {
+      "source": "app_api_lib_platform_ts",
+      "target": "lib_platform_getparam",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L622",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_platform_buildinforesponse",
+      "target": "lib_platform_getcookiespath",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L213",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_platform_buildinforesponse",
+      "target": "lib_platform_runytdlp",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L220",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_platform_buildmp4response",
+      "target": "lib_platform_getcookiespath",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L291",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_platform_buildmp4response",
+      "target": "lib_platform_addcorstoheaders",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L346",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_platform_buildmp4response",
+      "target": "lib_platform_fetchfromcobalt",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L374",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_platform_buildmp4response",
+      "target": "lib_platform_cleanupcookies",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L389",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_platform_buildmp4response",
+      "target": "lib_platform_runytdlp",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L394",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_platform_buildmp3response",
+      "target": "lib_platform_getcookiespath",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L516",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_platform_buildmp3response",
+      "target": "lib_platform_fetchfromcobalt",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L594",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_platform_buildmp3response",
+      "target": "lib_platform_addcorstoheaders",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\_lib\\platform.ts",
+      "source_location": "L596",
+      "weight": 1.0
+    },
+    {
+      "source": "components_resultcard_tsx",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "components\\ResultCard.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "components_resultcard_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "components\\ResultCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "components_resultcard_tsx",
+      "target": "components_resultcard_formatduration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components\\ResultCard.tsx",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "components_resultcard_tsx",
+      "target": "components_resultcard_handledownload",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components\\ResultCard.tsx",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "download_route_options",
+      "target": "lib_platform_optionsresponse",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app\\api\\dailymotion\\download\\route.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "download_route_get",
+      "target": "lib_platform_getparam",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app\\api\\dailymotion\\download\\route.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "download_route_get",
+      "target": "lib_platform_buildmp4response",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app\\api\\dailymotion\\download\\route.ts",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "download_route_get",
+      "target": "lib_platform_buildmp3response",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app\\api\\dailymotion\\download\\route.ts",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "download_route_get",
+      "target": "lib_platform_qualitytobitrate",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app\\api\\dailymotion\\download\\route.ts",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "info_route_options",
+      "target": "lib_platform_optionsresponse",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app\\api\\dailymotion\\info\\route.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "info_route_get",
+      "target": "lib_platform_getparam",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app\\api\\dailymotion\\info\\route.ts",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "info_route_get",
+      "target": "lib_platform_buildinforesponse",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app\\api\\dailymotion\\info\\route.ts",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_doc",
+      "target": "agents_nextjs_rules",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_doc",
+      "target": "agents_node_modules_docs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_nextjs_rules",
+      "target": "agents_node_modules_docs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "claude_doc",
+      "target": "agents_doc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": 1,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_doc",
+      "target": "readme_nextjs_framework",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_doc",
+      "target": "readme_create_next_app",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_doc",
+      "target": "readme_next_font",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_doc",
+      "target": "readme_geist_font",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_doc",
+      "target": "readme_vercel_platform",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_doc",
+      "target": "readme_rda",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_vercel_platform",
+      "target": "readme_nextjs_framework",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": 18,
+      "weight": 1.0
+    },
+    {
+      "source": "next_icon",
+      "target": "readme_nextjs_framework",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "public/next.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "vercel_icon",
+      "target": "readme_vercel_platform",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "public/vercel.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_nextjs_rules",
+      "target": "readme_nextjs_framework",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 0.8
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "project_ecosystem",
+      "label": "Next.js Project Ecosystem",
+      "nodes": [
+        "readme_doc",
+        "readme_nextjs_framework",
+        "readme_create_next_app",
+        "readme_next_font",
+        "readme_geist_font",
+        "readme_vercel_platform",
+        "readme_rda",
+        "next_icon",
+        "vercel_icon"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "README.md"
+    },
+    {
+      "id": "agent_configuration",
+      "label": "Agent Configuration Files",
+      "nodes": [
+        "agents_doc",
+        "claude_doc",
+        "agents_nextjs_rules"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md"
+    },
+    {
+      "id": "public_assets",
+      "label": "Public SVG Icon Assets",
+      "nodes": [
+        "file_icon",
+        "globe_icon",
+        "next_icon",
+        "vercel_icon",
+        "window_icon"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "public/"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
